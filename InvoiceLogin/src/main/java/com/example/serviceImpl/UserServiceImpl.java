@@ -8,10 +8,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+
 import com.example.DTO.LoginRequest;
 import com.example.config.CorsConfig;
 import com.example.entity.OTP;
 import com.example.entity.User;
+
 import com.example.repository.TokenRepository;
 import com.example.repository.UserRepository;
 import com.example.service.UserService;
@@ -23,6 +25,7 @@ import jakarta.transaction.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final CorsConfig corsConfig;
+    
 
     @Autowired
     private UserRepository userRepository;
@@ -35,6 +38,8 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private JavaMailSender javaMailSender;
+    
+
 
     UserServiceImpl(CorsConfig corsConfig) {
         this.corsConfig = corsConfig;
@@ -44,14 +49,12 @@ public class UserServiceImpl implements UserService {
      * Register new user (no password required)
      */
     @Override
-    public String register(User user) {
+    public User  register(User user) {
     	
     	if(userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
     		throw new RuntimeException("Email is already registered!");
     	}
-        // Just save user without password
-        userRepository.save(user);
-        return "User registered successfully!";
+        return  userRepository.save(user);
     }    
     
     
@@ -143,5 +146,6 @@ public class UserServiceImpl implements UserService {
         return jwtServiceImpl.generateToken(user);
     }
 
+	
 	
 }

@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.DTO.LoginRequest;
 import com.example.commons.RestAPIResponse;
@@ -25,16 +28,12 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<RestAPIResponse> register(@RequestBody User user) {
-	    Map<String, Object> response = new HashMap<>();
+
 	    try {
-	        String result = userServiceImpl.register(user);
-	        response.put("status", "success");
-	        response.put("message", result);
-	        return new ResponseEntity(new RestAPIResponse( "success","Registred Successfully",result),HttpStatus.OK);
+	    //    String result = userServiceImpl.register(user);  
+	        return new ResponseEntity(new RestAPIResponse( "success","Registred Successfully",userServiceImpl.register(user)),HttpStatus.OK);
 	    } catch (Exception e) {
-	        response.put("status", "error");
-	        response.put("message", e.getMessage());
-	        return new ResponseEntity(new RestAPIResponse( "error","Registred Successfully",null),HttpStatus.BAD_REQUEST);
+	        return new ResponseEntity(new RestAPIResponse( "error","Registred  Failed "),HttpStatus.OK);
 	    }
 	}
 
@@ -89,6 +88,7 @@ public class UserController {
 	        response.put("message", e.getMessage());
 	        return new ResponseEntity(new RestAPIResponse("error", "Login failed please check your otp",null),HttpStatus.BAD_REQUEST);
 	    }
+	
 	}
 	
 }
