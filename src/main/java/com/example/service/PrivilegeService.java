@@ -14,7 +14,7 @@ public interface PrivilegeService {
 
     PrivilegeDTO updatePrivilege(Long id, PrivilegeDTO privilegeDTO);
 
-    public void deletePrivilege(Long id);
+
 
     // Fetch operations
     List<PrivilegeDTO> getAllPrivileges();
@@ -28,4 +28,7 @@ public interface PrivilegeService {
     Map<String, List<PrivilegeDTO>> getPrivilegesByRole(Long roleId);
 
     Map<String, String> getEndpointPrivilegesMap();
+    
+    void deletePrivilege(Long id);
+    void deletePrivilegesByCategoryId(Long categoryId);
 }
